@@ -1,0 +1,61 @@
+{
+  "app": { "name": "Smart Farming DSS" },
+  "nav": {
+    "dashboard": "Dashboard",
+    "farms": "Farms",
+    "crops": "Crops",
+    "iot": "IoT Status",
+    "recommendations": "Recommendations",
+    "alerts": "Alerts",
+    "weather": "Weather",
+    "history": "History",
+    "profile": "Profile",
+    "users": "Users",
+    "farmers": "Farmers",
+    "experts": "Experts",
+    "devices": "Devices",
+    "analytics": "Analytics",
+    "notifications": "Notifications",
+    "systemHealth": "System Health",
+    "settings": "Settings",
+    "reviews": "Reviews",
+    "interventions": "Interventions",
+    "advisories": "Advisories",
+    "farmData": "Farm Data",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "phone": "Phone",
+    "role": "Role",
+    "language": "Language",
+    "submit": "Continue",
+    "noAccount": "No account? Register",
+    "hasAccount": "Have an account? Login",
+    "invalid": "Invalid credentials"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "empty": "No data yet.",
+    "search": "Search"
+  },
+  "dashboard": {
+    "totalFarmers": "Farmers",
+    "totalExperts": "Experts",
+    "activeDevices": "Active devices",
+    "alertsSent": "Alerts",
+    "soilMoisture": "Soil moisture",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "rainfall": "Rainfall"
+  }
+}

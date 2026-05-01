@@ -1,0 +1,61 @@
+{
+  "app": { "name": "Agriculture Intelligente" },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "farms": "Fermes",
+    "crops": "Cultures",
+    "iot": "Etat IoT",
+    "recommendations": "Recommandations",
+    "alerts": "Alertes",
+    "weather": "Meteo",
+    "history": "Historique",
+    "profile": "Profil",
+    "users": "Utilisateurs",
+    "farmers": "Agriculteurs",
+    "experts": "Experts",
+    "devices": "Appareils",
+    "analytics": "Analyses",
+    "notifications": "Notifications",
+    "systemHealth": "Sante systeme",
+    "settings": "Parametres",
+    "reviews": "Revues",
+    "interventions": "Interventions",
+    "advisories": "Avis d'expert",
+    "farmData": "Donnees fermes",
+    "logout": "Deconnexion"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "name": "Nom complet",
+    "phone": "Telephone",
+    "role": "Role",
+    "language": "Langue",
+    "submit": "Continuer",
+    "noAccount": "Pas de compte ? Inscrivez-vous",
+    "hasAccount": "Deja un compte ? Connectez-vous",
+    "invalid": "Identifiants invalides"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Creer",
+    "loading": "Chargement...",
+    "empty": "Aucune donnee.",
+    "search": "Rechercher"
+  },
+  "dashboard": {
+    "totalFarmers": "Agriculteurs",
+    "totalExperts": "Experts",
+    "activeDevices": "Appareils actifs",
+    "alertsSent": "Alertes",
+    "soilMoisture": "Humidite du sol",
+    "temperature": "Temperature",
+    "humidity": "Humidite",
+    "rainfall": "Pluviometrie"
+  }
+}

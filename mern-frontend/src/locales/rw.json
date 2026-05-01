@@ -1,0 +1,61 @@
+{
+  "app": { "name": "Sisitemu y'Ubuhinzi Bwite" },
+  "nav": {
+    "dashboard": "Imbonerahamwe",
+    "farms": "Imirima",
+    "crops": "Ibihingwa",
+    "iot": "Imashini z'IoT",
+    "recommendations": "Inama",
+    "alerts": "Iburira",
+    "weather": "Iteganyagihe",
+    "history": "Amateka",
+    "profile": "Umwirondoro",
+    "users": "Abakoresha",
+    "farmers": "Abahinzi",
+    "experts": "Impuguke",
+    "devices": "Ibikoresho",
+    "analytics": "Isesengura",
+    "notifications": "Ubutumwa",
+    "systemHealth": "Ubuzima bwa Sisitemu",
+    "settings": "Igenamiterere",
+    "reviews": "Isuzuma",
+    "interventions": "Ibikorwa",
+    "advisories": "Inama z'impuguke",
+    "farmData": "Amakuru y'Imirima",
+    "logout": "Sohoka"
+  },
+  "auth": {
+    "login": "Injira",
+    "register": "Iyandikishe",
+    "email": "Imeli",
+    "password": "Ijambobanga",
+    "name": "Amazina",
+    "phone": "Telefone",
+    "role": "Uruhare",
+    "language": "Ururimi",
+    "submit": "Komeza",
+    "noAccount": "Nta konti? Iyandikishe",
+    "hasAccount": "Ufite konti? Injira",
+    "invalid": "Amakuru atari yo"
+  },
+  "common": {
+    "save": "Bika",
+    "cancel": "Kuraho",
+    "delete": "Siba",
+    "edit": "Hindura",
+    "create": "Kora",
+    "loading": "Birapakira...",
+    "empty": "Nta makuru.",
+    "search": "Shakisha"
+  },
+  "dashboard": {
+    "totalFarmers": "Abahinzi",
+    "totalExperts": "Impuguke",
+    "activeDevices": "Ibikoresho bikora",
+    "alertsSent": "Iburira",
+    "soilMoisture": "Ubushuhe bw'ubutaka",
+    "temperature": "Ubushyuhe",
+    "humidity": "Ubushuhe",
+    "rainfall": "Imvura"
+  }
+}
