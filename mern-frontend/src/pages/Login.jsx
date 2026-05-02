@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import LanguageSwitcher from '../components/LanguageSwitcher';
+import AuthLayout from '../components/AuthLayout';
 
 export default function Login() {
   const { t } = useTranslation();
   const { login } = useAuth();
   const nav = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [show, setShow] = useState(false);
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -20,25 +22,84 @@ export default function Login() {
     finally { setBusy(false); }
   };
 
+  const fill = (email) => setForm({ email, password: 'password123' });
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-white p-4">
-      <form onSubmit={submit} className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-4 border">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-brand-700">🌱 {t('app.name')}</h1>
-          <LanguageSwitcher />
+    <AuthLayout
+      title={t('auth.login')}
+      subtitle="Welcome back. Sign in to your dashboard."
+      footer={<Link to="/register" className="text-brand-600 hover:underline">{t('auth.noAccount')}</Link>}
+    >
+      <form onSubmit={submit} className="space-y-4">
+        {err && (
+          <div className="flex items-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-300 text-sm px-3 py-2 animate-fade-in">
+            <AlertCircle className="h-4 w-4" /> {err}
+          </div>
+        )}
+        <div>
+          <label className="text-xs font-medium text-muted">{t('auth.email')}</label>
+          <div className="relative mt-1">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
+            <input
+              className="input !pl-9"
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              placeholder="you@farm.rw"
+              required
+            />
+          </div>
         </div>
-        <h2 className="text-lg font-semibold">{t('auth.login')}</h2>
-        {err && <div className="bg-red-50 text-red-700 text-sm rounded p-2">{err}</div>}
-        <input className="w-full border rounded px-3 py-2" placeholder={t('auth.email')} type="email"
-          value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-        <input className="w-full border rounded px-3 py-2" placeholder={t('auth.password')} type="password"
-          value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
-        <button disabled={busy} className="w-full bg-brand-600 hover:bg-brand-700 text-white py-2 rounded font-medium">
-          {busy ? '...' : t('auth.submit')}
+        <div>
+          <label className="text-xs font-medium text-muted">{t('auth.password')}</label>
+          <div className="relative mt-1">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
+            <input
+              className="input !pl-9 !pr-9"
+              type={show ? 'text' : 'password'}
+              autoComplete="current-password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShow((v) => !v)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-[var(--text)] p-1"
+              aria-label="Toggle password visibility"
+            >
+              {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" disabled={busy} className="btn-primary w-full h-11 disabled:opacity-70">
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+          {busy ? t('common.loading') : t('auth.submit')}
         </button>
-        <Link to="/register" className="block text-sm text-center text-brand-700 hover:underline">{t('auth.noAccount')}</Link>
-        <p className="text-xs text-gray-500 text-center">Demo: admin@demo.rw / farmer@demo.rw / expert@demo.rw — password123</p>
+
+        <div className="surface-2 p-3 text-xs">
+          <div className="font-medium mb-2 text-muted">Demo accounts (password: <code className="px-1 rounded bg-black/10 dark:bg-white/10">password123</code>)</div>
+          <div className="grid grid-cols-3 gap-1.5">
+            {[
+              ['Admin', 'admin@demo.rw'],
+              ['Farmer', 'farmer@demo.rw'],
+              ['Expert', 'expert@demo.rw'],
+            ].map(([role, email]) => (
+              <button
+                key={email}
+                type="button"
+                onClick={() => fill(email)}
+                className="btn-outline !py-1.5 !px-2 text-xs justify-center"
+              >
+                {role}
+              </button>
+            ))}
+          </div>
+        </div>
       </form>
-    </div>
+    </AuthLayout>
   );
 }
