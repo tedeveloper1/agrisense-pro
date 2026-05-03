@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/DashboardLayout';
 
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -15,6 +16,7 @@ import FarmerAlerts from './pages/farmer/Alerts';
 import FarmerWeather from './pages/farmer/Weather';
 import FarmerHistory from './pages/farmer/History';
 import FarmerProfile from './pages/farmer/Profile';
+import DiseasePrediction from './pages/farmer/DiseasePrediction';
 
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminUsers from './pages/admin/Users';
@@ -30,7 +32,7 @@ import ExpertInterventions from './pages/expert/Interventions';
 import ExpertAdvisories from './pages/expert/Advisories';
 import ExpertFarmData from './pages/expert/FarmData';
 
-function HomeRedirect() {
+function AppRedirect() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
@@ -43,7 +45,8 @@ const wrap = (el) => <DashboardLayout>{el}</DashboardLayout>;
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomeRedirect />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/app" element={<AppRedirect />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -55,6 +58,7 @@ export default function App() {
       <Route path="/farmer/recommendations" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerRecommendations />)}</ProtectedRoute>} />
       <Route path="/farmer/alerts" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerAlerts />)}</ProtectedRoute>} />
       <Route path="/farmer/weather" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerWeather />)}</ProtectedRoute>} />
+      <Route path="/farmer/disease" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<DiseasePrediction />)}</ProtectedRoute>} />
       <Route path="/farmer/history" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerHistory />)}</ProtectedRoute>} />
       <Route path="/farmer/profile" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerProfile />)}</ProtectedRoute>} />
 
