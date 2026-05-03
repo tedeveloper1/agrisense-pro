@@ -22,6 +22,7 @@ const NAV = {
     ]},
     { group: 'Insights', items: [
       { to: '/farmer/recommendations', key: 'nav.recommendations', icon: Lightbulb },
+      { to: '/farmer/disease', key: 'nav.disease', icon: Stethoscope },
       { to: '/farmer/alerts', key: 'nav.alerts', icon: Bell },
       { to: '/farmer/weather', key: 'nav.weather', icon: CloudSun },
       { to: '/farmer/history', key: 'nav.history', icon: History },
