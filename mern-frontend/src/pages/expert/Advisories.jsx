@@ -1,22 +1,32 @@
 import { useEffect, useState } from 'react';
+import { MessagesSquare } from 'lucide-react';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
+import EmptyState from '../../components/EmptyState';
 
 export default function Advisories() {
   const [items, setItems] = useState([]);
-  useEffect(() => { api.get('/expert/advisories').then((r) => setItems(r.data.advisories)); }, []);
+  useEffect(() => { api.get('/expert/advisories').then((r) => setItems(r.data.advisories || [])).catch(() => {}); }, []);
+
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Advisories</h1>
-      <div className="space-y-2">
-        {items.map((a) => (
-          <div key={a._id} className="bg-white border rounded p-3 text-sm">
-            <div className="font-semibold">{a.title}</div>
-            <div className="text-gray-600">{a.message}</div>
-            <div className="text-xs text-gray-400">{new Date(a.createdAt).toLocaleString()}</div>
-          </div>
-        ))}
-        {!items.length && <div className="text-gray-400">No advisories yet.</div>}
-      </div>
+    <div className="space-y-6">
+      <PageHeader title="Advisories" description="Public guidance shared with the farmer community." />
+
+      {items.length === 0 ? (
+        <EmptyState icon={MessagesSquare} title="No advisories yet" />
+      ) : (
+        <div className="grid gap-3">
+          {items.map((a) => (
+            <div key={a._id} className="surface p-5">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="font-semibold">{a.title}</h3>
+                <span className="text-xs text-muted">{new Date(a.createdAt).toLocaleString()}</span>
+              </div>
+              <p className="mt-2 text-sm text-muted">{a.message}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,25 +1,60 @@
 import { useEffect, useState } from 'react';
+import { Send, Bell } from 'lucide-react';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
+import EmptyState from '../../components/EmptyState';
+
+const CHANNEL_BADGE = {
+  inapp: 'bg-indigo-500/15 text-indigo-500',
+  sms: 'bg-brand-500/15 text-brand-600 dark:text-brand-400',
+  email: 'bg-amber-500/15 text-amber-500',
+};
 
 export default function Notifications() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({ title: '', message: '', channel: 'inapp', severity: 'info' });
-  const load = () => api.get('/admin/notifications').then((r) => setItems(r.data.notifications));
+  const load = () => api.get('/admin/notifications').then((r) => setItems(r.data.notifications || [])).catch(() => {});
   useEffect(() => { load(); }, []);
-  const send = async (e) => { e.preventDefault(); await api.post('/admin/notifications/send', form); setForm({...form, title:'', message:''}); load(); };
+  const send = async (e) => {
+    e.preventDefault();
+    await api.post('/admin/notifications/send', form);
+    setForm({ ...form, title: '', message: '' });
+    load();
+  };
+
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Notifications</h1>
-      <form onSubmit={send} className="bg-white border rounded p-4 grid md:grid-cols-4 gap-2">
-        <input className="border rounded px-2 py-1" placeholder="Title" value={form.title} onChange={(e)=>setForm({...form,title:e.target.value})} required />
-        <input className="border rounded px-2 py-1 md:col-span-2" placeholder="Message" value={form.message} onChange={(e)=>setForm({...form,message:e.target.value})} required />
-        <select className="border rounded px-2 py-1" value={form.channel} onChange={(e)=>setForm({...form,channel:e.target.value})}>
-          <option value="inapp">In-app</option><option value="sms">SMS</option><option value="email">Email</option>
+    <div className="space-y-6">
+      <PageHeader title="Notifications" description="Broadcast announcements across in-app, SMS or email channels." />
+
+      <form onSubmit={send} className="surface p-5 grid md:grid-cols-4 gap-3">
+        <input className="input" placeholder="Title" value={form.title} onChange={(e)=>setForm({...form,title:e.target.value})} required />
+        <input className="input md:col-span-2" placeholder="Message" value={form.message} onChange={(e)=>setForm({...form,message:e.target.value})} required />
+        <select className="input" value={form.channel} onChange={(e)=>setForm({...form,channel:e.target.value})}>
+          <option value="inapp">In-app</option>
+          <option value="sms">SMS</option>
+          <option value="email">Email</option>
         </select>
-        <button className="bg-brand-600 text-white rounded py-1 md:col-span-4">Broadcast</button>
+        <button className="btn-primary md:col-span-4"><Send className="h-4 w-4" /> Broadcast</button>
       </form>
-      <div className="bg-white border rounded p-4 space-y-2 text-sm">
-        {items.map((n) => <div key={n._id} className="border-b pb-2"><b>{n.title}</b> — {n.message} <span className="text-xs text-gray-400">({n.channel})</span></div>)}
+
+      <div className="surface p-5">
+        <h2 className="font-semibold mb-4">Recent broadcasts</h2>
+        {items.length === 0 ? (
+          <EmptyState icon={Bell} title="No notifications yet" />
+        ) : (
+          <ul className="divide-y divide-[var(--border)]">
+            {items.map((n) => (
+              <li key={n._id} className="py-3 flex items-start gap-3">
+                <span className={`badge ${CHANNEL_BADGE[n.channel] || ''}`}>{n.channel}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="font-medium">{n.title}</div>
+                  <div className="text-sm text-muted">{n.message}</div>
+                </div>
+                <span className="text-xs text-muted shrink-0">{new Date(n.createdAt).toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
