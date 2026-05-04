@@ -21,7 +21,7 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
             <div className="h-10 w-10 rounded-xl bg-gradient-accent grid place-items-center shadow-glow">
               <Sprout className="h-5 w-5 text-white" />
             </div>
-            <span className="font-semibold text-white">AgriPulse</span>
+            <span className="font-semibold text-white">Rwanda Beyond</span>
           </div>
         </div>
         <div className="relative max-w-md">
@@ -41,7 +41,7 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
             ))}
           </ul>
         </div>
-        <div className="relative text-xs text-ink-400">© {new Date().getFullYear()} AgriPulse</div>
+        <div className="relative text-xs text-ink-400">© {new Date().getFullYear()} Rwanda Beyond</div>
       </div>
 
       {/* Right: Form */}
@@ -56,7 +56,7 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
               <div className="h-9 w-9 rounded-xl bg-gradient-accent grid place-items-center shadow-glow">
                 <Sprout className="h-5 w-5 text-white" />
               </div>
-              <span className="font-semibold">AgriPulse</span>
+              <span className="font-semibold">Rwanda Beyond</span>
             </div>
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
             {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}

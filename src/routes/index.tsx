@@ -11,13 +11,13 @@ import { Card, CardContent } from "@/components/ui/card";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AgriPulse — Smart Farming Decision Support for Rwanda" },
+      { title: "Rwanda Beyond — Smart Farming Decision Support for Rwanda" },
       {
         name: "description",
         content:
-          "AgriPulse helps maize and vegetable farmers in Rwanda decide what, when and how to grow with IoT, weather, AI insights and expert advisories.",
+          "Rwanda Beyond helps maize and vegetable farmers in Rwanda decide what, when and how to grow with IoT, weather, AI insights and expert advisories.",
       },
-      { property: "og:title", content: "AgriPulse — Smart Farming DSS" },
+      { property: "og:title", content: "Rwanda Beyond — Smart Farming DSS" },
       {
         property: "og:description",
         content:
@@ -77,7 +77,7 @@ function LandingPage() {
               <span className="text-gradient">every farm,</span> every day.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl animate-fade-in">
-              AgriPulse turns soil sensors, weather data and expert knowledge
+              Rwanda Beyond turns soil sensors, weather data and expert knowledge
               into clear daily actions for maize and vegetable farmers — on
               smartphone, web, or simple USSD.
             </p>
@@ -119,7 +119,7 @@ function LandingPage() {
                 <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-chart-3/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
-                <span className="ml-3 text-xs text-muted-foreground">app.agripulse.rw / farmer / dashboard</span>
+                <span className="ml-3 text-xs text-muted-foreground">app.rwandabeyond.rw / farmer / dashboard</span>
               </div>
               <CardContent className="p-6 grid gap-4 md:grid-cols-4">
                 {[
@@ -275,7 +275,7 @@ function LandingPage() {
               </h2>
               <p className="mt-4 text-lg text-primary-foreground/80 max-w-xl">
                 Join thousands of farmers, experts and cooperatives already
-                using AgriPulse. Free to start, no credit card required.
+                using Rwanda Beyond. Free to start, no credit card required.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow" asChild>

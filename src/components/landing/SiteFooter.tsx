@@ -9,7 +9,7 @@ export function SiteFooter() {
             <div className="h-9 w-9 rounded-xl bg-gradient-accent grid place-items-center shadow-glow">
               <Sprout className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-semibold">AgriPulse</span>
+            <span className="font-semibold">Rwanda Beyond</span>
           </div>
           <p className="mt-4 text-sm text-muted-foreground max-w-sm">
             A smart farming decision support system built for maize and
@@ -41,7 +41,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 text-xs text-muted-foreground flex flex-col sm:flex-row justify-between gap-2">
-          <span>© {new Date().getFullYear()} AgriPulse. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Rwanda Beyond. All rights reserved.</span>
           <span>Crafted for farmers in Rwanda 🇷🇼</span>
         </div>
       </div>

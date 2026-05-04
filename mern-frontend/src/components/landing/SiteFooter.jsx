@@ -10,7 +10,7 @@ export default function SiteFooter() {
             <div className="h-9 w-9 rounded-xl bg-gradient-accent grid place-items-center shadow-glow">
               <Sprout className="h-5 w-5 text-white" />
             </div>
-            <span className="font-semibold">AgriPulse</span>
+            <span className="font-semibold">Rwanda Beyond</span>
           </Link>
           <p className="mt-3 text-sm text-muted max-w-xs">
             Smart farming decisions for maize and vegetable growers in Rwanda and beyond.
@@ -32,7 +32,7 @@ export default function SiteFooter() {
         ))}
       </div>
       <div className="border-t border-[var(--border)] py-6 text-center text-xs text-muted">
-        © {new Date().getFullYear()} AgriPulse. All rights reserved.
+        © {new Date().getFullYear()} Rwanda Beyond. All rights reserved.
       </div>
     </footer>
   );
