@@ -5,6 +5,7 @@ const Notification = require('../models/Notification');
 const Farm = require('../models/Farm');
 const Crop = require('../models/Crop');
 const { sendBulkSMS } = require('../services/smsService');
+const { sendBulkEmail } = require('../services/emailService');
 
 exports.dashboard = async (req, res, next) => {
   try {
@@ -90,14 +91,36 @@ exports.listNotifications = async (_req, res, next) => {
 exports.sendNotification = async (req, res, next) => {
   try {
     const { title, message, channel = 'inapp', userIds = [], severity = 'info' } = req.body;
-    const targets = userIds.length ? userIds : [null]; // null = broadcast
+    const isBroadcast = !userIds.length;
+
+    // Persist in-app notifications
+    const targets = userIds.length ? userIds : [null]; // null = broadcast row
     const created = await Notification.insertMany(
       targets.map((u) => ({ user: u, title, message, channel, severity }))
     );
-    if (channel === 'sms' && userIds.length) {
-      const users = await User.find({ _id: { $in: userIds } }).select('phone');
-      await sendBulkSMS(users.map((u) => u.phone).filter(Boolean), `${title}: ${message}`);
+
+    // Build recipient list
+    const recipientQuery = isBroadcast
+      ? { active: true, emailVerified: true }
+      : { _id: { $in: userIds } };
+    const recipients = await User.find(recipientQuery).select('email phone name');
+
+    let emailResult = { sent: 0, failed: 0 };
+    let smsResult = null;
+
+    // Email: always send when channel is 'email', OR for any broadcast (so it reaches users' inbox)
+    if (channel === 'email' || isBroadcast) {
+      const emails = recipients.map((u) => u.email).filter(Boolean);
+      emailResult = await sendBulkEmail(emails, { title, message, severity });
     }
-    res.status(201).json({ notifications: created });
+    if (channel === 'sms') {
+      const phones = recipients.map((u) => u.phone).filter(Boolean);
+      smsResult = await sendBulkSMS(phones, `${title}: ${message}`);
+    }
+
+    res.status(201).json({
+      notifications: created,
+      delivery: { recipients: recipients.length, email: emailResult, sms: smsResult, broadcast: isBroadcast },
+    });
   } catch (err) { next(err); }
 };

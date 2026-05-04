@@ -14,9 +14,9 @@ const IoTData = require('../models/IoTData');
     User.deleteMany({ email: { $in: ['admin@demo.rw', 'farmer@demo.rw', 'expert@demo.rw'] } }),
   ]);
 
-  const admin = await User.create({ name: 'Admin', email: 'admin@demo.rw', password: 'password123', role: 'admin', language: 'en' });
-  const farmer = await User.create({ name: 'Jean Farmer', email: 'farmer@demo.rw', password: 'password123', role: 'farmer', language: 'rw', region: 'Musanze', phone: '+250788000001' });
-  const expert = await User.create({ name: 'Aline Expert', email: 'expert@demo.rw', password: 'password123', role: 'expert', language: 'fr', region: 'Kigali' });
+  const admin = await User.create({ name: 'Admin', email: 'admin@demo.rw', password: 'password123', role: 'admin', language: 'en', emailVerified: true });
+  const farmer = await User.create({ name: 'Jean Farmer', email: 'farmer@demo.rw', password: 'password123', role: 'farmer', language: 'rw', region: 'Musanze', phone: '+250788000001', emailVerified: true });
+  const expert = await User.create({ name: 'Aline Expert', email: 'expert@demo.rw', password: 'password123', role: 'expert', language: 'fr', region: 'Kigali', emailVerified: true });
 
   const farm = await Farm.create({
     owner: farmer._id, name: 'Demo Maize Farm',
