@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Send, Bell } from 'lucide-react';
+import { Send, Bell, Mail, MessageSquare, AlertTriangle, Info, CheckCircle2 } from 'lucide-react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 import EmptyState from '../../components/EmptyState';
@@ -10,16 +10,28 @@ const CHANNEL_BADGE = {
   email: 'bg-amber-500/15 text-amber-500',
 };
 
+const SEVERITY_BADGE = {
+  info: 'bg-sky-500/15 text-sky-500',
+  warning: 'bg-amber-500/15 text-amber-600',
+  critical: 'bg-rose-500/15 text-rose-500',
+};
+
 export default function Notifications() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({ title: '', message: '', channel: 'inapp', severity: 'info' });
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState(null);
   const load = () => api.get('/admin/notifications').then((r) => setItems(r.data.notifications || [])).catch(() => {});
   useEffect(() => { load(); }, []);
   const send = async (e) => {
     e.preventDefault();
-    await api.post('/admin/notifications/send', form);
-    setForm({ ...form, title: '', message: '' });
-    load();
+    setBusy(true); setResult(null);
+    try {
+      const { data } = await api.post('/admin/notifications/send', form);
+      setResult(data.delivery);
+      setForm({ ...form, title: '', message: '' });
+      load();
+    } finally { setBusy(false); }
   };
 
   return (
