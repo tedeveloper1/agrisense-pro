@@ -37,7 +37,7 @@ export default function SiteHeader() {
           <div className="h-9 w-9 rounded-xl bg-gradient-accent grid place-items-center shadow-glow">
             <Sprout className="h-5 w-5 text-white" />
           </div>
-          <span className="font-semibold tracking-tight">AgriPulse</span>
+          <span className="font-semibold tracking-tight">Rwanda Beyond</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

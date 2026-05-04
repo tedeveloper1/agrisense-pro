@@ -96,7 +96,7 @@ function Sidebar({ open, onClose }) {
               <Sprout className="h-5 w-5 text-white" />
             </div>
             <div>
-              <div className="text-sm font-semibold tracking-tight">AgriPulse</div>
+              <div className="text-sm font-semibold tracking-tight">Rwanda Beyond</div>
               <div className="text-[10px] uppercase text-ink-400 tracking-wider">{t('app.name')}</div>
             </div>
           </div>

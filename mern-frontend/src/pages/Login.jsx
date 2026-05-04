@@ -1,25 +1,36 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle, MailWarning } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../components/AuthLayout';
 
 export default function Login() {
   const { t } = useTranslation();
-  const { login } = useAuth();
+  const { login, resendVerification } = useAuth();
   const nav = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
   const [show, setShow] = useState(false);
   const [err, setErr] = useState('');
+  const [needsVerify, setNeedsVerify] = useState(null);
+  const [resent, setResent] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
-    setErr(''); setBusy(true);
-    try { await login(form.email, form.password); nav('/'); }
-    catch { setErr(t('auth.invalid')); }
+    setErr(''); setNeedsVerify(null); setBusy(true);
+    try { await login(form.email, form.password); nav('/app'); }
+    catch (ex) {
+      const data = ex?.response?.data;
+      if (data?.error === 'EmailNotVerified') setNeedsVerify(data.email || form.email);
+      else setErr(t('auth.invalid'));
+    }
     finally { setBusy(false); }
+  };
+
+  const resend = async () => {
+    setResent(false);
+    try { await resendVerification(needsVerify); setResent(true); } catch {}
   };
 
   const fill = (email) => setForm({ email, password: 'password123' });
@@ -34,6 +45,20 @@ export default function Login() {
         {err && (
           <div className="flex items-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-300 text-sm px-3 py-2 animate-fade-in">
             <AlertCircle className="h-4 w-4" /> {err}
+          </div>
+        )}
+        {needsVerify && (
+          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-sm px-3 py-3 animate-fade-in space-y-2">
+            <div className="flex items-center gap-2 font-medium">
+              <MailWarning className="h-4 w-4" /> Please confirm your email first
+            </div>
+            <p className="text-xs opacity-90">
+              We sent a verification link to <b>{needsVerify}</b>. Confirm it to activate your account.
+            </p>
+            <button type="button" onClick={resend} className="btn-outline !py-1.5 !px-3 text-xs">
+              Resend verification email
+            </button>
+            {resent && <p className="text-xs">A new link has been sent.</p>}
           </div>
         )}
         <div>

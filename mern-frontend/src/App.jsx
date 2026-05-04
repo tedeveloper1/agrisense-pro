@@ -6,6 +6,7 @@ import DashboardLayout from './components/DashboardLayout';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import VerifyEmail from './pages/VerifyEmail';
 
 import FarmerDashboard from './pages/farmer/Dashboard';
 import FarmerFarms from './pages/farmer/Farms';
@@ -49,6 +50,7 @@ export default function App() {
       <Route path="/app" element={<AppRedirect />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
 
       {/* Farmer */}
       <Route path="/farmer/dashboard" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerDashboard />)}</ProtectedRoute>} />

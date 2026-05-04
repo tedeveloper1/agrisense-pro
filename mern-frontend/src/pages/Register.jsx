@@ -1,30 +1,72 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { User, Mail, Lock, Phone, Loader2, AlertCircle } from 'lucide-react';
+import { User, Mail, Lock, Phone, Loader2, AlertCircle, MailCheck, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../components/AuthLayout';
 
 export default function Register() {
   const { t } = useTranslation();
-  const { register } = useAuth();
+  const { register, resendVerification } = useAuth();
   const nav = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', role: 'farmer', language: 'en' });
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(null); // { email }
+  const [resent, setResent] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
     setErr(''); setBusy(true);
-    try { await register(form); nav('/'); }
+    try {
+      const res = await register(form);
+      if (res?.requiresVerification) {
+        setDone({ email: res.email || form.email });
+      } else {
+        nav('/app');
+      }
+    }
     catch (ex) { setErr(ex?.response?.data?.message || 'Error'); }
     finally { setBusy(false); }
   };
 
+  const resend = async () => {
+    if (!done?.email) return;
+    setResent(false);
+    try { await resendVerification(done.email); setResent(true); } catch {}
+  };
+
+  if (done) {
+    return (
+      <AuthLayout
+        title="Check your inbox"
+        subtitle="One last step to activate your account."
+        footer={<Link to="/login" className="text-brand-600 hover:underline">Back to sign in</Link>}
+      >
+        <div className="surface p-6 text-center space-y-4 animate-fade-in">
+          <div className="mx-auto h-14 w-14 rounded-2xl bg-brand-500/15 grid place-items-center">
+            <MailCheck className="h-7 w-7 text-brand-600 dark:text-brand-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-lg">Verify your email</h3>
+            <p className="text-sm text-muted mt-1">
+              We sent a confirmation link to <b>{done.email}</b>. Click it to activate your Rwanda Beyond account.
+            </p>
+          </div>
+          <button onClick={resend} className="btn-outline w-full">
+            <RefreshCw className="h-4 w-4" /> Resend verification email
+          </button>
+          {resent && <p className="text-xs text-brand-600 dark:text-brand-400">A new link is on its way.</p>}
+          <p className="text-[11px] text-muted">Didn't get it? Check spam, or wait a minute and resend.</p>
+        </div>
+      </AuthLayout>
+    );
+  }
+
   return (
     <AuthLayout
       title={t('auth.register')}
-      subtitle="Create your free account in under a minute."
+      subtitle="Create your free Rwanda Beyond account in under a minute."
       footer={<Link to="/login" className="text-brand-600 hover:underline">{t('auth.hasAccount')}</Link>}
     >
       <form onSubmit={submit} className="space-y-4">
@@ -69,6 +111,9 @@ export default function Register() {
           {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
           {busy ? t('common.loading') : t('auth.submit')}
         </button>
+        <p className="text-[11px] text-muted text-center">
+          By signing up, you agree to verify your email before signing in.
+        </p>
       </form>
     </AuthLayout>
   );

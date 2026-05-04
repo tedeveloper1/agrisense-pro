@@ -52,7 +52,7 @@ export default function Landing() {
               <span className="bg-gradient-accent bg-clip-text text-transparent">every farm,</span> every day.
             </h1>
             <p className="mt-6 text-lg text-muted max-w-2xl animate-fade-in">
-              AgriPulse turns soil sensors, weather data and expert knowledge into clear daily
+              Rwanda Beyond turns soil sensors, weather data and expert knowledge into clear daily
               actions for maize and vegetable farmers — on smartphone, web, or simple USSD.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3 animate-fade-in">
@@ -80,7 +80,7 @@ export default function Landing() {
                 <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-brand-500/70" />
-                <span className="ml-3 text-xs text-muted">app.agripulse.rw / farmer / dashboard</span>
+                <span className="ml-3 text-xs text-muted">app.rwandabeyond.rw / farmer / dashboard</span>
               </div>
               <div className="p-6 grid gap-4 md:grid-cols-4">
                 {[
@@ -226,7 +226,7 @@ export default function Landing() {
                 Ready to grow smarter?
               </h2>
               <p className="mt-4 text-lg text-white/80 max-w-xl">
-                Join thousands of farmers, experts and cooperatives already using AgriPulse.
+                Join thousands of farmers, experts and cooperatives already using Rwanda Beyond.
                 Free to start, no credit card required.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">

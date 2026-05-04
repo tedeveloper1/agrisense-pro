@@ -30,12 +30,25 @@ export function AuthProvider({ children }) {
     } finally { setLoading(false); }
   };
 
+  // Returns { requiresVerification: true, email } — user must verify email before login.
   const register = async (payload) => {
     const { data } = await api.post('/auth/register', payload);
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setUser(data.user);
-    return data.user;
+    return data;
+  };
+
+  const resendVerification = async (email) => {
+    const { data } = await api.post('/auth/resend-verification', { email });
+    return data;
+  };
+
+  const verifyEmail = async (token) => {
+    const { data } = await api.get('/auth/verify-email', { params: { token } });
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+    }
+    return data;
   };
 
   const logout = () => {
@@ -45,7 +58,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, resendVerification, verifyEmail }}>
       {children}
     </AuthContext.Provider>
   );

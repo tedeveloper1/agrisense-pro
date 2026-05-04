@@ -26,5 +26,11 @@ router.post(
 );
 
 router.get('/me', authenticate, ctrl.me);
+router.get('/verify-email', ctrl.verifyEmail);
+router.post('/resend-verification',
+  [body('email').isEmail().normalizeEmail()],
+  validate,
+  ctrl.resendVerification
+);
 
 module.exports = router;

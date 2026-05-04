@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema(
     language: { type: String, enum: ['en', 'rw', 'fr'], default: 'en' },
     region: { type: String, trim: true },
     active: { type: Boolean, default: true },
+    emailVerified: { type: Boolean, default: false, index: true },
+    emailVerificationToken: { type: String, index: true },
+    emailVerificationExpires: { type: Date },
   },
   { timestamps: true }
 );
