@@ -18,6 +18,8 @@ import FarmerWeather from './pages/farmer/Weather';
 import FarmerHistory from './pages/farmer/History';
 import FarmerProfile from './pages/farmer/Profile';
 import DiseasePrediction from './pages/farmer/DiseasePrediction';
+import Protection from './pages/farmer/Protection';
+import USSDInfo from './pages/farmer/USSDInfo';
 
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminUsers from './pages/admin/Users';
@@ -26,6 +28,7 @@ import AdminAnalytics from './pages/admin/Analytics';
 import AdminNotifications from './pages/admin/Notifications';
 import AdminSystemHealth from './pages/admin/SystemHealth';
 import AdminSettings from './pages/admin/Settings';
+import USSDConsole from './pages/admin/USSDConsole';
 
 import ExpertDashboard from './pages/expert/Dashboard';
 import ExpertReviews from './pages/expert/Reviews';
@@ -61,6 +64,8 @@ export default function App() {
       <Route path="/farmer/alerts" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerAlerts />)}</ProtectedRoute>} />
       <Route path="/farmer/weather" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerWeather />)}</ProtectedRoute>} />
       <Route path="/farmer/disease" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<DiseasePrediction />)}</ProtectedRoute>} />
+      <Route path="/farmer/protection" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<Protection />)}</ProtectedRoute>} />
+      <Route path="/farmer/ussd" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<USSDInfo />)}</ProtectedRoute>} />
       <Route path="/farmer/history" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerHistory />)}</ProtectedRoute>} />
       <Route path="/farmer/profile" element={<ProtectedRoute roles={['farmer','admin']}>{wrap(<FarmerProfile />)}</ProtectedRoute>} />
 
@@ -74,6 +79,7 @@ export default function App() {
       <Route path="/admin/notifications" element={<ProtectedRoute roles={['admin']}>{wrap(<AdminNotifications />)}</ProtectedRoute>} />
       <Route path="/admin/system-health" element={<ProtectedRoute roles={['admin']}>{wrap(<AdminSystemHealth />)}</ProtectedRoute>} />
       <Route path="/admin/settings" element={<ProtectedRoute roles={['admin']}>{wrap(<AdminSettings />)}</ProtectedRoute>} />
+      <Route path="/admin/ussd" element={<ProtectedRoute roles={['admin']}>{wrap(<USSDConsole />)}</ProtectedRoute>} />
 
       {/* Expert */}
       <Route path="/expert/dashboard" element={<ProtectedRoute roles={['expert','admin']}>{wrap(<ExpertDashboard />)}</ProtectedRoute>} />

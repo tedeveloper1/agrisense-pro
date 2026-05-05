@@ -5,6 +5,7 @@ import {
   Sprout, LayoutDashboard, Tractor, Wheat, Cpu, Lightbulb, Bell, CloudSun,
   History, User, Users, UserCheck, Activity, Settings, Server, BarChart3,
   ClipboardCheck, MessagesSquare, Stethoscope, Database, Search, LogOut, Menu, X,
+  ShieldCheck, Phone,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -22,10 +23,15 @@ const NAV = {
     ]},
     { group: 'Insights', items: [
       { to: '/farmer/recommendations', key: 'nav.recommendations', icon: Lightbulb },
+      { to: '/farmer/protection', key: 'nav.protection', icon: ShieldCheck },
       { to: '/farmer/disease', key: 'nav.disease', icon: Stethoscope },
       { to: '/farmer/alerts', key: 'nav.alerts', icon: Bell },
       { to: '/farmer/weather', key: 'nav.weather', icon: CloudSun },
       { to: '/farmer/history', key: 'nav.history', icon: History },
+    ]},
+    { group: 'Account', items: [
+      { to: '/farmer/ussd', key: 'nav.ussd', icon: Phone },
+      { to: '/farmer/profile', key: 'nav.profile', icon: User },
     ]},
     { group: 'Account', items: [
       { to: '/farmer/profile', key: 'nav.profile', icon: User },
