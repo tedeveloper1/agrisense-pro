@@ -10,6 +10,8 @@
     "weather": "Weather",
     "history": "History",
     "disease": "Disease prediction",
+    "protection": "Crop protection",
+    "ussd": "USSD access",
     "profile": "Profile",
     "users": "Users",
     "farmers": "Farmers",

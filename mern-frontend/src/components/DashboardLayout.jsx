@@ -33,9 +33,6 @@ const NAV = {
       { to: '/farmer/ussd', key: 'nav.ussd', icon: Phone },
       { to: '/farmer/profile', key: 'nav.profile', icon: User },
     ]},
-    { group: 'Account', items: [
-      { to: '/farmer/profile', key: 'nav.profile', icon: User },
-    ]},
   ],
   admin: [
     { group: 'Overview', items: [
@@ -50,6 +47,7 @@ const NAV = {
     { group: 'Platform', items: [
       { to: '/admin/devices', key: 'nav.devices', icon: Cpu },
       { to: '/admin/notifications', key: 'nav.notifications', icon: Bell },
+      { to: '/admin/ussd', key: 'nav.ussd', icon: Phone },
       { to: '/admin/system-health', key: 'nav.systemHealth', icon: Server },
       { to: '/admin/settings', key: 'nav.settings', icon: Settings },
     ]},
