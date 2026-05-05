@@ -20,6 +20,7 @@ const adminRoutes = require('./routes/admin.routes');
 const expertRoutes = require('./routes/expert.routes');
 const ussdRoutes = require('./routes/ussd.routes');
 const predictionRoutes = require('./routes/prediction.routes');
+const protectionRoutes = require('./routes/protection.routes');
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/expert', expertRoutes);
 app.use('/api/ussd', ussdRoutes);
 app.use('/api/predictions', predictionRoutes);
+app.use('/api/protection', protectionRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

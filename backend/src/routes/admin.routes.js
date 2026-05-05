@@ -16,4 +16,8 @@ router.get('/system-health', ctrl.systemHealth);
 router.get('/notifications', ctrl.listNotifications);
 router.post('/notifications/send', ctrl.sendNotification);
 
+const ussdAdmin = require('../controllers/ussdAdmin.controller');
+router.get('/ussd/sessions', ussdAdmin.list);
+router.get('/ussd/stats', ussdAdmin.stats);
+
 module.exports = router;
