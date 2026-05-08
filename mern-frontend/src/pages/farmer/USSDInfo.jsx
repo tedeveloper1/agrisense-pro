@@ -64,7 +64,7 @@ export default function USSDInfo() {
               </div>
               <div className="inline-flex items-center gap-1 rounded-lg bg-[var(--surface-2)] p-1">
                 {['en','rw','fr'].map((l) => (
-                  <button key={l} onClick={() => setLang(l)}
+                  <button key={l} onClick={() => { setLang(l); i18n.changeLanguage(l); localStorage.setItem('lang', l); }}
                     className={`h-7 px-2.5 text-xs rounded-md uppercase ${lang === l ? 'bg-brand-500 text-white' : 'text-muted'}`}>
                     {l}
                   </button>
@@ -100,10 +100,7 @@ export default function USSDInfo() {
 
           <div className="surface p-4 flex items-start gap-3 text-xs text-muted">
             <Hash className="h-4 w-4 mt-0.5 shrink-0" />
-            <div>
-              The short code <b className="text-[var(--text)]">*123#</b> is a placeholder. In production it is provisioned with a telco
-              (e.g. MTN / Airtel) and routes via Africa’s Talking to <code className="font-mono">/api/ussd</code>.
-            </div>
+            <div>{t('ussd.telcoNote')}</div>
           </div>
         </div>
       </div>

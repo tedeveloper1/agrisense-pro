@@ -30,7 +30,7 @@ const IoTData = require('../models/IoTData');
   await Device.create({ deviceId: 'demo-node-001', farm: farm._id, label: 'Field A node', status: 'active', lastSeenAt: new Date() });
   await IoTData.create({
     deviceId: 'demo-node-001', farm: farm._id,
-    soilMoisture: 22, temperature: 29, humidity: 78, rainfall: 0, lightIntensity: 18000,
+    soilMoisture: 22, temperature: 29, humidity: 78, rainfall: 0, lightIntensity: 18000, ph: 6.2,
   });
 
   console.log('[seed] done. Logins:');
