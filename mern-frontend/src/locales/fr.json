@@ -1,5 +1,5 @@
 {
-  "app": { "name": "Agriculture Intelligente" },
+  "app": { "name": "Rwanda Beyond" },
   "nav": {
     "dashboard": "Tableau de bord",
     "farms": "Fermes",
@@ -9,9 +9,9 @@
     "alerts": "Alertes",
     "weather": "Meteo",
     "history": "Historique",
-    "disease": "Prédiction de maladie",
+    "disease": "Prediction de maladie",
     "protection": "Protection des cultures",
-    "ussd": "Accès USSD",
+    "ussd": "Acces USSD",
     "profile": "Profil",
     "users": "Utilisateurs",
     "farmers": "Agriculteurs",
@@ -25,7 +25,17 @@
     "interventions": "Interventions",
     "advisories": "Avis d'expert",
     "farmData": "Donnees fermes",
-    "logout": "Deconnexion"
+    "logout": "Deconnexion",
+    "groups": {
+      "overview": "Apercu",
+      "farming": "Agriculture",
+      "insights": "Analyses",
+      "account": "Compte",
+      "people": "Personnes",
+      "platform": "Plateforme",
+      "work": "Travail",
+      "data": "Donnees"
+    }
   },
   "auth": {
     "login": "Connexion",
@@ -39,7 +49,11 @@
     "submit": "Continuer",
     "noAccount": "Pas de compte ? Inscrivez-vous",
     "hasAccount": "Deja un compte ? Connectez-vous",
-    "invalid": "Identifiants invalides"
+    "invalid": "Identifiants invalides",
+    "verifyTitle": "Verifiez votre email",
+    "verifyDesc": "Cliquez sur le lien envoye pour confirmer votre adresse.",
+    "resend": "Renvoyer l'email de verification",
+    "checkInbox": "Verifiez votre boite de reception."
   },
   "common": {
     "save": "Enregistrer",
@@ -49,7 +63,10 @@
     "create": "Creer",
     "loading": "Chargement...",
     "empty": "Aucune donnee.",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "back": "Retour",
+    "retry": "Reessayer",
+    "viewAll": "Voir tout"
   },
   "dashboard": {
     "totalFarmers": "Agriculteurs",
@@ -59,6 +76,46 @@
     "soilMoisture": "Humidite du sol",
     "temperature": "Temperature",
     "humidity": "Humidite",
-    "rainfall": "Pluviometrie"
+    "rainfall": "Pluviometrie",
+    "ph": "pH du sol",
+    "welcome": "Bon retour"
+  },
+  "weather": {
+    "title": "Meteo",
+    "description": "Conditions hyperlocales et previsions sur 5 jours.",
+    "noData": "Pas de donnees meteo",
+    "noDataDesc": "Definissez l'emplacement de votre ferme pour des previsions precises.",
+    "fiveDay": "Previsions 5 jours",
+    "noForecast": "Aucune prevision disponible."
+  },
+  "protection": {
+    "title": "Protection des cultures",
+    "description": "Prevenir avant de guerir — score de risque quotidien, alertes meteo, pH du sol et calendrier d'actions.",
+    "scan": "Lancer l'analyse",
+    "scanning": "Analyse en cours…",
+    "noFarms": "Aucune ferme a proteger",
+    "noFarmsDesc": "Ajoutez une ferme et des cultures pour recevoir scores et actions preventives.",
+    "high": "Risque eleve",
+    "medium": "Surveiller",
+    "low": "Protege",
+    "calendar": "Calendrier d'actions preventives",
+    "noTasks": "Aucune tache planifiee.",
+    "diseases": "Maladies probables cette semaine",
+    "diseasesDesc": "Predites a partir de la saison rwandaise + meteo + capteurs.",
+    "noDiseases": "Aucune maladie hautement probable."
+  },
+  "ussd": {
+    "title": "Acces USSD",
+    "description": "Utilisez Rwanda Beyond sur un telephone basique — sans smartphone ni internet.",
+    "dialPrompt": "Composez depuis n'importe quel telephone",
+    "dialIntro": "Rwanda Beyond fonctionne sur les telephones basiques. Composez le code court pour la meteo, les conseils et les alertes.",
+    "menu1": "Meteo de votre district",
+    "menu2": "Recommandations du jour",
+    "menu3": "Alertes de protection",
+    "menu4": "Maladies probables pour votre culture",
+    "menu5": "Lecture du pH du sol",
+    "menu6": "Lier votre telephone a votre compte",
+    "menu7": "Changer de langue (EN / RW / FR)",
+    "telcoNote": "Le code court est fourni par un operateur (MTN / Airtel) et achemine via Africa's Talking vers /api/ussd."
   }
 }

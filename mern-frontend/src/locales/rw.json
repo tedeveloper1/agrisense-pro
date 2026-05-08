@@ -1,5 +1,5 @@
 {
-  "app": { "name": "Sisitemu y'Ubuhinzi Bwite" },
+  "app": { "name": "Rwanda Beyond" },
   "nav": {
     "dashboard": "Imbonerahamwe",
     "farms": "Imirima",
@@ -25,7 +25,17 @@
     "interventions": "Ibikorwa",
     "advisories": "Inama z'impuguke",
     "farmData": "Amakuru y'Imirima",
-    "logout": "Sohoka"
+    "logout": "Sohoka",
+    "groups": {
+      "overview": "Incamake",
+      "farming": "Ubuhinzi",
+      "insights": "Ibyatekerejwe",
+      "account": "Konti",
+      "people": "Abantu",
+      "platform": "Urubuga",
+      "work": "Akazi",
+      "data": "Amakuru"
+    }
   },
   "auth": {
     "login": "Injira",
@@ -39,7 +49,11 @@
     "submit": "Komeza",
     "noAccount": "Nta konti? Iyandikishe",
     "hasAccount": "Ufite konti? Injira",
-    "invalid": "Amakuru atari yo"
+    "invalid": "Amakuru atari yo",
+    "verifyTitle": "Emeza imeli yawe",
+    "verifyDesc": "Kanda kuri link twakoherereje kugira ngo wemeze imeli yawe.",
+    "resend": "Subira wohereze imeli yo kwemeza",
+    "checkInbox": "Reba imeli yawe ukomeze."
   },
   "common": {
     "save": "Bika",
@@ -49,7 +63,10 @@
     "create": "Kora",
     "loading": "Birapakira...",
     "empty": "Nta makuru.",
-    "search": "Shakisha"
+    "search": "Shakisha",
+    "back": "Subira",
+    "retry": "Ongera",
+    "viewAll": "Reba byose"
   },
   "dashboard": {
     "totalFarmers": "Abahinzi",
@@ -58,7 +75,47 @@
     "alertsSent": "Iburira",
     "soilMoisture": "Ubushuhe bw'ubutaka",
     "temperature": "Ubushyuhe",
-    "humidity": "Ubushuhe",
-    "rainfall": "Imvura"
+    "humidity": "Ubushuhe bw'umwuka",
+    "rainfall": "Imvura",
+    "ph": "pH y'ubutaka",
+    "welcome": "Murakaza neza"
+  },
+  "weather": {
+    "title": "Iteganyagihe",
+    "description": "Iteganyagihe ry'akarere kawe n'iminsi 5 itaha.",
+    "noData": "Nta makuru y'iteganyagihe",
+    "noDataDesc": "Shyiramo aho umurima wawe uherereye kugira ngo ubone iteganyagihe nyaryo.",
+    "fiveDay": "Iteganyagihe ry'iminsi 5",
+    "noForecast": "Nta teganyagihe rihari."
+  },
+  "protection": {
+    "title": "Kurinda Imyaka",
+    "description": "Wirinde ibibazo mbere y'uko biba — amanota y'ingaruka, ibyago by'iteganyagihe, pH y'ubutaka n'imikorere isobanuye.",
+    "scan": "Kora isuzuma",
+    "scanning": "Birasuzumwa…",
+    "noFarms": "Nta murima ufite",
+    "noFarmsDesc": "Ongeraho umurima n'ibihingwa kugira ngo utangire kubona amanota n'inama.",
+    "high": "Ingaruka nyinshi",
+    "medium": "Witondere",
+    "low": "Birinzwe",
+    "calendar": "Gahunda y'ibikorwa byo kurinda",
+    "noTasks": "Nta gikorwa giteganyijwe.",
+    "diseases": "Indwara zishobora kuza iyi cyumweru",
+    "diseasesDesc": "Ziteganyijwe hashingiwe ku gihe cy'umwaka mu Rwanda + iteganyagihe + sensor zawe.",
+    "noDiseases": "Nta ndwara zishoboka cyane ubu."
+  },
+  "ussd": {
+    "title": "USSD",
+    "description": "Koresha Rwanda Beyond kuri telefoni isanzwe — nta interineti ikenewe.",
+    "dialPrompt": "Kanda kuri telefoni iyo ari yo yose — nta interineti",
+    "dialIntro": "Rwanda Beyond ikora no kuri telefoni zisanzwe. Kanda code kugira ngo umenye iteganyagihe, inama n'amakuru yo kurinda.",
+    "menu1": "Iteganyagihe ry'akarere kawe",
+    "menu2": "Inama z'uyu munsi",
+    "menu3": "Iburira ku byo kurinda imyaka",
+    "menu4": "Iteganya indwara z'igihingwa cyawe",
+    "menu5": "pH y'ubutaka bwawe",
+    "menu6": "Huza telefoni n'ikonti yawe",
+    "menu7": "Hindura ururimi (EN / RW / FR)",
+    "telcoNote": "Code igenwa na telecom (MTN / Airtel) ikanyura kuri Africa's Talking ku /api/ussd."
   }
 }

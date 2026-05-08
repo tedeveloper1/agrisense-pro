@@ -1,5 +1,5 @@
 {
-  "app": { "name": "Smart Farming DSS" },
+  "app": { "name": "Rwanda Beyond" },
   "nav": {
     "dashboard": "Dashboard",
     "farms": "Farms",
@@ -25,7 +25,17 @@
     "interventions": "Interventions",
     "advisories": "Advisories",
     "farmData": "Farm Data",
-    "logout": "Logout"
+    "logout": "Logout",
+    "groups": {
+      "overview": "Overview",
+      "farming": "Farming",
+      "insights": "Insights",
+      "account": "Account",
+      "people": "People",
+      "platform": "Platform",
+      "work": "Work",
+      "data": "Data"
+    }
   },
   "auth": {
     "login": "Login",
@@ -39,7 +49,11 @@
     "submit": "Continue",
     "noAccount": "No account? Register",
     "hasAccount": "Have an account? Login",
-    "invalid": "Invalid credentials"
+    "invalid": "Invalid credentials",
+    "verifyTitle": "Verify your email",
+    "verifyDesc": "Click the link we sent to confirm your address.",
+    "resend": "Resend verification email",
+    "checkInbox": "Check your inbox to continue."
   },
   "common": {
     "save": "Save",
@@ -49,7 +63,10 @@
     "create": "Create",
     "loading": "Loading...",
     "empty": "No data yet.",
-    "search": "Search"
+    "search": "Search",
+    "back": "Back",
+    "retry": "Retry",
+    "viewAll": "View all"
   },
   "dashboard": {
     "totalFarmers": "Farmers",
@@ -59,6 +76,46 @@
     "soilMoisture": "Soil moisture",
     "temperature": "Temperature",
     "humidity": "Humidity",
-    "rainfall": "Rainfall"
+    "rainfall": "Rainfall",
+    "ph": "Soil pH",
+    "welcome": "Welcome back"
+  },
+  "weather": {
+    "title": "Weather",
+    "description": "Hyperlocal conditions and 5-day forecast.",
+    "noData": "No weather data",
+    "noDataDesc": "Set your farm location to receive hyperlocal forecasts.",
+    "fiveDay": "5-day forecast",
+    "noForecast": "No forecast available."
+  },
+  "protection": {
+    "title": "Crop Protection",
+    "description": "Prevent problems before they happen — daily risk scoring, weather hazards, soil pH and a stage-aware action calendar.",
+    "scan": "Run protection scan",
+    "scanning": "Scanning…",
+    "noFarms": "No farms to protect yet",
+    "noFarmsDesc": "Add a farm and crops to start receiving daily protection scores and preventive actions.",
+    "high": "High risk",
+    "medium": "Watch",
+    "low": "Protected",
+    "calendar": "Preventive action calendar",
+    "noTasks": "No tasks scheduled yet.",
+    "diseases": "Likely diseases this week",
+    "diseasesDesc": "Predicted from Rwanda season + weather + your sensors.",
+    "noDiseases": "No high-probability diseases right now."
+  },
+  "ussd": {
+    "title": "USSD access",
+    "description": "Use Rwanda Beyond on a basic phone — no smartphone or data needed.",
+    "dialPrompt": "Dial from any phone — no internet required",
+    "dialIntro": "Rwanda Beyond works on basic phones too. Dial the short code to check weather, recommendations and protection alerts in your language.",
+    "menu1": "Weather forecast for your district",
+    "menu2": "Today's farming recommendations",
+    "menu3": "Crop protection alerts",
+    "menu4": "Disease forecast for your crop",
+    "menu5": "Soil pH reading",
+    "menu6": "Link your phone to your account",
+    "menu7": "Change language (EN / RW / FR)",
+    "telcoNote": "The short code is provisioned with a telco (MTN / Airtel) and routes via Africa's Talking to /api/ussd."
   }
 }
