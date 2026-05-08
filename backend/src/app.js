@@ -24,24 +24,18 @@ const protectionRoutes = require('./routes/protection.routes');
 
 const app = express();
 
-app.use(helmet());
-const corsOptions = {
-  origin: function (origin, callback) {
-    const allowed = [
-      "http://localhost:5173",
-      "https://agrisense-pro-one.vercel.app"
-    ];
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 
-    if (!origin || allowed.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-};
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: "*",
+}));
 
-app.use(cors());
 app.options("*", cors());
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
