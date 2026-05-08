@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CloudSun, Droplets, Cloud, CloudRain, MapPin } from 'lucide-react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 import EmptyState from '../../components/EmptyState';
 
 export default function Weather() {
+  const { t } = useTranslation();
   const [w, setW] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,12 +20,12 @@ export default function Weather() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Weather" description="Hyperlocal conditions and 5-day forecast." />
+      <PageHeader title={t('weather.title')} description={t('weather.description')} />
 
       {loading ? (
         <div className="surface p-8"><div className="skel h-24 w-full" /></div>
       ) : !w ? (
-        <EmptyState icon={CloudSun} title="No weather data" description="Set your farm location to receive hyperlocal forecasts." />
+        <EmptyState icon={CloudSun} title={t('weather.noData')} description={t('weather.noDataDesc')} />
       ) : (
         <div className="surface p-6 relative overflow-hidden bg-gradient-primary text-white">
           <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-brand-500/30 blur-3xl" />
@@ -39,18 +41,18 @@ export default function Weather() {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 min-w-[260px]">
-              <Mini icon={Droplets} label="Humidity" value={`${w.humidity}%`} />
-              <Mini icon={CloudRain} label="Rainfall" value={`${w.rainfall} mm`} />
-              <Mini icon={Cloud} label="Clouds" value={w.condition} />
+              <Mini icon={Droplets} label={t('dashboard.humidity')} value={`${w.humidity}%`} />
+              <Mini icon={CloudRain} label={t('dashboard.rainfall')} value={`${w.rainfall} mm`} />
+              <Mini icon={Cloud} label="Wind" value={`${w.windSpeed ?? 0} m/s`} />
             </div>
           </div>
         </div>
       )}
 
       <div className="surface p-5">
-        <h2 className="font-semibold mb-4">5-day forecast</h2>
+        <h2 className="font-semibold mb-4">{t('weather.fiveDay')}</h2>
         {forecast.length === 0 ? (
-          <div className="text-sm text-muted py-4 text-center">No forecast available.</div>
+          <div className="text-sm text-muted py-4 text-center">{t('weather.noForecast')}</div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {forecast.map((d, i) => (
