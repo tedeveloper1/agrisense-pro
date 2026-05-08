@@ -13,15 +13,15 @@ import ThemeToggle from './ThemeToggle';
 
 const NAV = {
   farmer: [
-    { group: 'Overview', items: [
+    { gKey: 'nav.groups.overview', items: [
       { to: '/farmer/dashboard', key: 'nav.dashboard', icon: LayoutDashboard },
     ]},
-    { group: 'Farming', items: [
+    { gKey: 'nav.groups.farming', items: [
       { to: '/farmer/farms', key: 'nav.farms', icon: Tractor },
       { to: '/farmer/crops', key: 'nav.crops', icon: Wheat },
       { to: '/farmer/iot-status', key: 'nav.iot', icon: Cpu },
     ]},
-    { group: 'Insights', items: [
+    { gKey: 'nav.groups.insights', items: [
       { to: '/farmer/recommendations', key: 'nav.recommendations', icon: Lightbulb },
       { to: '/farmer/protection', key: 'nav.protection', icon: ShieldCheck },
       { to: '/farmer/disease', key: 'nav.disease', icon: Stethoscope },
@@ -29,22 +29,22 @@ const NAV = {
       { to: '/farmer/weather', key: 'nav.weather', icon: CloudSun },
       { to: '/farmer/history', key: 'nav.history', icon: History },
     ]},
-    { group: 'Account', items: [
+    { gKey: 'nav.groups.account', items: [
       { to: '/farmer/ussd', key: 'nav.ussd', icon: Phone },
       { to: '/farmer/profile', key: 'nav.profile', icon: User },
     ]},
   ],
   admin: [
-    { group: 'Overview', items: [
+    { gKey: 'nav.groups.overview', items: [
       { to: '/admin/dashboard', key: 'nav.dashboard', icon: LayoutDashboard },
       { to: '/admin/analytics', key: 'nav.analytics', icon: BarChart3 },
     ]},
-    { group: 'People', items: [
+    { gKey: 'nav.groups.people', items: [
       { to: '/admin/users', key: 'nav.users', icon: Users },
       { to: '/admin/farmers', key: 'nav.farmers', icon: Tractor },
       { to: '/admin/experts', key: 'nav.experts', icon: UserCheck },
     ]},
-    { group: 'Platform', items: [
+    { gKey: 'nav.groups.platform', items: [
       { to: '/admin/devices', key: 'nav.devices', icon: Cpu },
       { to: '/admin/notifications', key: 'nav.notifications', icon: Bell },
       { to: '/admin/ussd', key: 'nav.ussd', icon: Phone },
@@ -53,16 +53,16 @@ const NAV = {
     ]},
   ],
   expert: [
-    { group: 'Overview', items: [
+    { gKey: 'nav.groups.overview', items: [
       { to: '/expert/dashboard', key: 'nav.dashboard', icon: LayoutDashboard },
     ]},
-    { group: 'Work', items: [
+    { gKey: 'nav.groups.work', items: [
       { to: '/expert/reviews', key: 'nav.reviews', icon: ClipboardCheck },
       { to: '/expert/recommendations', key: 'nav.recommendations', icon: Lightbulb },
       { to: '/expert/interventions', key: 'nav.interventions', icon: Stethoscope },
       { to: '/expert/advisories', key: 'nav.advisories', icon: MessagesSquare },
     ]},
-    { group: 'Data', items: [
+    { gKey: 'nav.groups.data', items: [
       { to: '/expert/farm-data', key: 'nav.farmData', icon: Database },
       { to: '/expert/profile', key: 'nav.profile', icon: User },
     ]},
@@ -111,9 +111,9 @@ function Sidebar({ open, onClose }) {
 
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
           {groups.map((g) => (
-            <div key={g.group}>
+            <div key={g.gKey}>
               <div className="px-3 text-[10px] font-semibold uppercase tracking-wider text-ink-400 mb-1.5">
-                {g.group}
+                {t(g.gKey)}
               </div>
               <div className="space-y-0.5">
                 {g.items.map((it) => (
