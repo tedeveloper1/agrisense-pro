@@ -1,49 +1,28 @@
 import { useState } from 'react';
-import { Phone, Languages, CloudSun, Lightbulb, ShieldCheck, Hash } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Phone, CloudSun, Lightbulb, ShieldCheck, Hash, Stethoscope, FlaskConical } from 'lucide-react';
 import PageHeader from '../../components/PageHeader';
 
-const MENU = {
-  en: {
-    code: '*123#',
-    title: 'Dial from any phone — no internet required',
-    intro: 'Rwanda Beyond works on basic phones too. Dial the short code below to check weather, recommendations and protection alerts in your language.',
-    items: [
-      { k: '1', label: 'Weather forecast for your district' },
-      { k: '2', label: 'Today’s farming recommendations' },
-      { k: '3', label: 'Change language (EN / RW / FR)' },
-    ],
-  },
-  rw: {
-    code: '*123#',
-    title: 'Kanda kuri telefoni iyo ari yo yose — nta interineti ikenewe',
-    intro: 'Rwanda Beyond ikora no kuri telefoni zisanzwe. Kanda code ikurikira kugira ngo umenye iteganyagihe, inama n’ibyitabwaho mu rurimi rwawe.',
-    items: [
-      { k: '1', label: 'Iteganyagihe ry’akarere kawe' },
-      { k: '2', label: 'Inama z’uyu munsi mu buhinzi' },
-      { k: '3', label: 'Hindura ururimi (EN / RW / FR)' },
-    ],
-  },
-  fr: {
-    code: '*123#',
-    title: 'Composez depuis n’importe quel téléphone — sans internet',
-    intro: 'Rwanda Beyond fonctionne aussi sur les téléphones basiques. Composez le code court ci-dessous pour la météo, les recommandations et les alertes de protection.',
-    items: [
-      { k: '1', label: 'Météo de votre district' },
-      { k: '2', label: 'Recommandations agricoles du jour' },
-      { k: '3', label: 'Changer de langue (EN / RW / FR)' },
-    ],
-  },
-};
-
 export default function USSDInfo() {
-  const [lang, setLang] = useState('en');
-  const m = MENU[lang];
+  const { t, i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language || 'en');
+  const code = '*123#';
+  const items = [
+    { k: '1', label: t('ussd.menu1') },
+    { k: '2', label: t('ussd.menu2') },
+    { k: '3', label: t('ussd.menu3') },
+    { k: '4', label: t('ussd.menu4') },
+    { k: '5', label: t('ussd.menu5') },
+    { k: '6', label: t('ussd.menu6') },
+    { k: '7', label: t('ussd.menu7') },
+  ];
+  const m = { code, title: t('ussd.dialPrompt'), intro: t('ussd.dialIntro'), items };
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="USSD access"
-        description="Use Rwanda Beyond on a basic phone — no smartphone or data needed."
+        title={t('ussd.title')}
+        description={t('ussd.description')}
       />
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -56,9 +35,11 @@ export default function USSDInfo() {
               <div className="text-[11px] text-ink-400 mt-1">Press the call button</div>
             </div>
             <div className="mt-4 rounded-lg bg-black/40 p-3 text-[11px] font-mono leading-relaxed">
-              <div>1. {lang === 'rw' ? 'Iteganyagihe' : lang === 'fr' ? 'Météo' : 'Weather'}</div>
-              <div>2. {lang === 'rw' ? 'Inama' : lang === 'fr' ? 'Conseils' : 'Recommendations'}</div>
-              <div>3. {lang === 'rw' ? 'Hindura ururimi' : lang === 'fr' ? 'Langue' : 'Language'}</div>
+              <div>1. {t('ussd.menu1')}</div>
+              <div>2. {t('ussd.menu2')}</div>
+              <div>3. {t('ussd.menu3')}</div>
+              <div>4. {t('ussd.menu4')}</div>
+              <div>5. {t('ussd.menu5')}</div>
             </div>
             <div className="mt-3 grid grid-cols-3 gap-1.5">
               {['1','2','3','4','5','6','7','8','9','*','0','#'].map((k) => (
