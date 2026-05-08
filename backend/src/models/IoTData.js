@@ -9,6 +9,7 @@ const IoTDataSchema = new mongoose.Schema(
     humidity: Number,        // %
     rainfall: Number,        // mm
     lightIntensity: Number,  // lux
+    ph: Number,              // soil pH (0–14, ideal 6.0–7.0 for most crops)
     timestamp: { type: Date, default: Date.now, index: true },
   },
   { timestamps: true }
