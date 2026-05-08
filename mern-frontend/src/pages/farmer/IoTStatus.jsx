@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Cpu, Droplets, Thermometer, Cloud, CloudRain, Radio } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Cpu, Droplets, Thermometer, Cloud, CloudRain, Radio, FlaskConical } from 'lucide-react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 import EmptyState from '../../components/EmptyState';
 
 export default function IoTStatus() {
+  const { t } = useTranslation();
   const [latest, setLatest] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -40,11 +42,18 @@ export default function IoTStatus() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Tile icon={Droplets} label="Soil moisture" value={`${latest.soilMoisture}%`} accent="brand" />
-            <Tile icon={Thermometer} label="Temperature" value={`${latest.temperature}°C`} accent="amber" />
-            <Tile icon={Cloud} label="Humidity" value={`${latest.humidity}%`} accent="indigo" />
-            <Tile icon={CloudRain} label="Rainfall" value={`${latest.rainfall} mm`} accent="rose" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <Tile icon={Droplets} label={t('dashboard.soilMoisture')} value={`${latest.soilMoisture ?? '—'}%`} accent="brand" />
+            <Tile icon={Thermometer} label={t('dashboard.temperature')} value={`${latest.temperature ?? '—'}°C`} accent="amber" />
+            <Tile icon={Cloud} label={t('dashboard.humidity')} value={`${latest.humidity ?? '—'}%`} accent="indigo" />
+            <Tile icon={CloudRain} label={t('dashboard.rainfall')} value={`${latest.rainfall ?? 0} mm`} accent="rose" />
+            <Tile
+              icon={FlaskConical}
+              label={t('dashboard.ph')}
+              value={latest.ph != null ? latest.ph.toFixed(1) : '—'}
+              accent={latest.ph == null ? 'indigo' : latest.ph < 5.5 || latest.ph > 7.8 ? 'rose' : 'brand'}
+              hint={latest.ph == null ? 'no sensor' : latest.ph < 5.5 ? 'acidic' : latest.ph > 7.8 ? 'alkaline' : 'optimal'}
+            />
           </div>
         </>
       )}
@@ -52,7 +61,7 @@ export default function IoTStatus() {
   );
 }
 
-function Tile({ icon: Icon, label, value, accent }) {
+function Tile({ icon: Icon, label, value, accent, hint }) {
   const map = {
     brand: 'bg-brand-500/10 text-brand-600 dark:text-brand-400',
     amber: 'bg-amber-500/10 text-amber-500',
@@ -66,6 +75,7 @@ function Tile({ icon: Icon, label, value, accent }) {
       </div>
       <div className="mt-3 text-xs uppercase tracking-wide text-muted">{label}</div>
       <div className="mt-1 text-2xl font-semibold tracking-tight">{value}</div>
+      {hint && <div className="text-[10px] text-muted mt-0.5 capitalize">{hint}</div>}
     </div>
   );
 }
