@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ShieldCheck, AlertTriangle, CalendarClock, Sprout, CloudRain, Thermometer,
-  Droplets, Loader2, Sparkles, CheckCircle2, Bug, Wind, Sun,
+  Droplets, Loader2, Sparkles, CheckCircle2, Bug, Wind, Sun, Stethoscope, FlaskConical,
 } from 'lucide-react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 import EmptyState from '../../components/EmptyState';
 
 const LEVEL = {
-  high: { ring: 'ring-rose-500/30', bar: 'bg-rose-500', tag: 'bg-rose-500/15 text-rose-500', label: 'High risk' },
-  medium: { ring: 'ring-amber-500/30', bar: 'bg-amber-500', tag: 'bg-amber-500/15 text-amber-500', label: 'Watch' },
-  low: { ring: 'ring-brand-500/30', bar: 'bg-brand-500', tag: 'bg-brand-500/15 text-brand-600 dark:text-brand-400', label: 'Protected' },
+  high: { ring: 'ring-rose-500/30', bar: 'bg-rose-500', tag: 'bg-rose-500/15 text-rose-500', labelKey: 'protection.high' },
+  medium: { ring: 'ring-amber-500/30', bar: 'bg-amber-500', tag: 'bg-amber-500/15 text-amber-500', labelKey: 'protection.medium' },
+  low: { ring: 'ring-brand-500/30', bar: 'bg-brand-500', tag: 'bg-brand-500/15 text-brand-600 dark:text-brand-400', labelKey: 'protection.low' },
 };
 
 const HAZARD_ICON = {
   frost: Wind, heatwave: Sun, heavy_rain: CloudRain,
   drought: Droplets, humid_disease_window: Bug,
+  soil_acidic: FlaskConical, soil_alkaline: FlaskConical,
 };
 
 const CAT_ICON = {
@@ -36,6 +38,7 @@ function RiskRing({ score, level }) {
 }
 
 export default function Protection() {
+  const { t } = useTranslation();
   const [data, setData] = useState(null);
   const [calendar, setCalendar] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,12 +71,12 @@ export default function Protection() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Crop Protection"
-        description="Prevent problems before they happen — daily risk scoring, weather hazards, and a stage-aware action calendar."
+        title={t('protection.title')}
+        description={t('protection.description')}
         actions={
           <button onClick={runScan} disabled={scanning} className="btn-primary h-10 disabled:opacity-60">
             {scanning ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-            {scanning ? 'Scanning…' : 'Run protection scan'}
+            {scanning ? t('protection.scanning') : t('protection.scan')}
           </button>
         }
       />
@@ -91,8 +94,8 @@ export default function Protection() {
       ) : farms.length === 0 ? (
         <EmptyState
           icon={Sprout}
-          title="No farms to protect yet"
-          description="Add a farm and crops to start receiving daily protection scores and preventive actions."
+          title={t('protection.noFarms')}
+          description={t('protection.noFarmsDesc')}
         />
       ) : (
         <>
@@ -110,7 +113,7 @@ export default function Protection() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <h3 className="font-semibold truncate">{f.farm.name}</h3>
-                        <span className={`badge ${overall.tag}`}>{overall.label}</span>
+                        <span className={`badge ${overall.tag}`}>{t(overall.labelKey)}</span>
                       </div>
                       <div className="mt-1 text-xs text-muted truncate">
                         {f.farm.location?.district || 'Rwanda'}
@@ -119,6 +122,9 @@ export default function Protection() {
                         <span className="inline-flex items-center gap-1"><Thermometer className="h-3.5 w-3.5" /> {f.weather.temperature}°C</span>
                         <span className="inline-flex items-center gap-1"><Droplets className="h-3.5 w-3.5" /> {f.weather.humidity}%</span>
                         <span className="inline-flex items-center gap-1"><CloudRain className="h-3.5 w-3.5" /> {f.weather.rainfall} mm</span>
+                        {f.iot?.ph != null && (
+                          <span className="inline-flex items-center gap-1"><FlaskConical className="h-3.5 w-3.5" /> pH {f.iot.ph}</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -163,6 +169,27 @@ export default function Protection() {
                       })}
                     </div>
                   )}
+
+                  {/* Likely diseases (season + weather + IoT) */}
+                  {f.diseases && f.diseases.length > 0 && (
+                    <div className="mt-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Stethoscope className="h-4 w-4 text-brand-500" />
+                        <h4 className="text-sm font-semibold">{t('protection.diseases')}</h4>
+                      </div>
+                      <p className="text-xs text-muted mb-2">{t('protection.diseasesDesc')}</p>
+                      <ul className="space-y-1.5">
+                        {f.diseases.slice(0, 4).map((d, i) => (
+                          <li key={i} className="flex items-center justify-between text-xs gap-2">
+                            <span className="truncate"><b>{d.name}</b> <span className="text-muted">· {d.crop}</span></span>
+                            <span className={`badge shrink-0 ${LEVEL[d.severity === 'high' ? 'high' : d.severity === 'medium' ? 'medium' : 'low'].tag}`}>
+                              {Math.round(d.probability * 100)}%
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -172,11 +199,11 @@ export default function Protection() {
           <div className="surface p-5">
             <div className="flex items-center gap-2 mb-4">
               <CalendarClock className="h-4 w-4 text-brand-500" />
-              <h3 className="font-semibold">Preventive action calendar</h3>
+              <h3 className="font-semibold">{t('protection.calendar')}</h3>
               <span className="badge bg-[var(--surface-2)] text-muted ml-2">{calendar.length}</span>
             </div>
             {calendar.length === 0 ? (
-              <div className="text-sm text-muted">No tasks scheduled yet.</div>
+              <div className="text-sm text-muted">{t('protection.noTasks')}</div>
             ) : (
               <ul className="divide-y divide-[var(--border)]">
                 {calendar.slice(0, 30).map((t) => {
