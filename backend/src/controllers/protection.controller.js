@@ -7,13 +7,15 @@ const {
   detectHazards,
   computeRiskScore,
   buildPreventiveCalendar,
+  predictLikelyDiseases,
 } = require('../services/protectionService');
-const { getCurrentWeather, getForecast } = require('../services/weatherService');
+const { getCurrentWeather, getForecast, getSeason } = require('../services/weatherService');
 const { sendBulkEmail } = require('../services/emailService');
 
 /**
  * GET /api/protection/overview
- * Per-crop risk scores + active hazards for the farmer's farms.
+ * Per-crop risk scores, hazards, AND likely diseases pulled directly from
+ * live sensor data + Open-Meteo + Rwanda season.
  */
 exports.overview = async (req, res, next) => {
   try {
@@ -23,47 +25,65 @@ exports.overview = async (req, res, next) => {
 
     const result = [];
     for (const farm of farms) {
-      const weather = await getCurrentWeather({ region: farm.location?.district || 'Kigali' });
+      const weather = await getCurrentWeather({
+        region: farm.location?.district || 'Kigali',
+        lat: farm.location?.lat,
+        lng: farm.location?.lng,
+      });
+      const forecast = await getForecast({
+        region: farm.location?.district || 'Kigali',
+        lat: farm.location?.lat, lng: farm.location?.lng, days: 5,
+      });
       const iot = (await IoTData.findOne({ farm: farm._id }).sort('-timestamp')) || {};
-      const hazards = detectHazards({
+      const merged = {
         ...weather,
         humidity: iot.humidity ?? weather.humidity,
         temperature: iot.temperature ?? weather.temperature,
-      });
+        ph: iot.ph,
+      };
+      const hazards = detectHazards(merged);
       const farmCrops = crops.filter((c) => String(c.farm) === String(farm._id));
-      const cropRisks = (farmCrops.length ? farmCrops : [{ name: 'general', stage: 'vegetative' }]).map((c) =>
+      const cropList = farmCrops.length ? farmCrops : [{ name: 'maize', stage: 'vegetative' }];
+
+      const cropRisks = cropList.map((c) =>
         computeRiskScore({
-          crop: c.name,
-          stage: c.stage,
+          crop: c.name, stage: c.stage,
           weather,
-          iot: { humidity: iot.humidity, temperature: iot.temperature, soilMoisture: iot.soilMoisture },
+          iot: { humidity: iot.humidity, temperature: iot.temperature, soilMoisture: iot.soilMoisture, ph: iot.ph },
         })
       );
+      const diseases = cropList.flatMap((c) =>
+        predictLikelyDiseases({ crop: c.name, stage: c.stage, weather, iot })
+          .slice(0, 3)
+          .map((d) => ({ ...d, crop: c.name, stage: c.stage }))
+      );
+
       result.push({
         farm: { _id: farm._id, name: farm.name, location: farm.location },
-        weather,
+        weather, forecast,
+        iot: {
+          deviceId: iot.deviceId, timestamp: iot.timestamp,
+          soilMoisture: iot.soilMoisture, temperature: iot.temperature,
+          humidity: iot.humidity, rainfall: iot.rainfall, ph: iot.ph,
+        },
         hazards,
         risks: cropRisks,
+        diseases,
         overallScore: cropRisks.length
           ? Math.round(cropRisks.reduce((s, r) => s + r.score, 0) / cropRisks.length)
           : 0,
       });
     }
-    res.json({ farms: result });
+    res.json({ farms: result, season: getSeason() });
   } catch (err) { next(err); }
 };
 
-/**
- * GET /api/protection/calendar?crop=&stage=
- * Build a preventive action calendar for the next ~14 days.
- */
 exports.calendar = async (req, res, next) => {
   try {
     const { crop, stage } = req.query;
     if (crop && stage) {
       return res.json({ tasks: buildPreventiveCalendar({ crop, stage }) });
     }
-    // Default: aggregate calendars across farmer's crops
     const farms = await Farm.find({ owner: req.user._id }).select('_id');
     const crops = await Crop.find({ farm: { $in: farms.map((f) => f._id) } });
     const all = crops.flatMap((c) =>
@@ -75,16 +95,10 @@ exports.calendar = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-/**
- * POST /api/protection/scan
- * Run protection scan for ALL users (admin) and broadcast email alerts
- * to everyone with a high-risk hazard. Designed to be triggered by cron.
- */
 exports.scanAndAlert = async (req, res, next) => {
   try {
     const isAdmin = req.user?.role === 'admin';
     const onlyMe = !isAdmin;
-
     const userQuery = onlyMe ? { _id: req.user._id } : { active: true, emailVerified: true };
     const users = await User.find(userQuery).select('email name _id');
 
@@ -94,9 +108,17 @@ exports.scanAndAlert = async (req, res, next) => {
       if (!farms.length) continue;
       const hazards = [];
       for (const f of farms) {
-        const w = await getCurrentWeather({ region: f.location?.district || 'Kigali' });
+        const w = await getCurrentWeather({
+          region: f.location?.district || 'Kigali',
+          lat: f.location?.lat, lng: f.location?.lng,
+        });
         const iot = (await IoTData.findOne({ farm: f._id }).sort('-timestamp')) || {};
-        const h = detectHazards({ ...w, humidity: iot.humidity ?? w.humidity, temperature: iot.temperature ?? w.temperature });
+        const h = detectHazards({
+          ...w,
+          humidity: iot.humidity ?? w.humidity,
+          temperature: iot.temperature ?? w.temperature,
+          ph: iot.ph,
+        });
         h.forEach((x) => hazards.push({ ...x, farm: f.name }));
       }
       const critical = hazards.filter((h) => h.severity === 'critical' || h.severity === 'warning');
