@@ -24,6 +24,9 @@ export default function FarmerDashboard() {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
   const [history, setHistory] = useState([]);
+  const [dashData, setDashData] = useState(null);
+const [dashLoading, setDashLoading] = useState(true);
+const [history, setHistory] = useState([]);
   const { data: iotLive, loading: iotLoading, error: iotError } = useLiveIoT('farm-node-001');
 
  useEffect(() => {
