@@ -20,6 +20,23 @@ exports.ingest = async (req, res, next) => {
     res.status(201).json({ reading });
   } catch (err) { next(err); }
 };
+exports.ingestData = async (req, res) => {
+  try {
+    const {
+      deviceId, soilMoisture, temperature,
+      humidity, pH, irrigationActive, pesticideActive
+    } = req.body;
+
+    const entry = await IoTData.create({
+      deviceId, soilMoisture, temperature,
+      humidity, pH, irrigationActive, pesticideActive
+    });
+
+    res.status(201).json({ success: true, data: entry });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 exports.latest = async (req, res, next) => {
   try {
@@ -38,4 +55,19 @@ exports.history = async (req, res, next) => {
       .limit(limit);
     res.json({ data });
   } catch (err) { next(err); }
+};
+// Paste this new controller function:
+exports.getPumpStatus = async (req, res) => {
+  try {
+    const { deviceId } = req.query;
+    const latest = await IoTData.findOne({ deviceId })
+      .sort({ createdAt: -1 });
+
+    res.json({
+      pesticidePump: latest ? latest.pesticideActive : false,
+      irrigation:    latest ? latest.irrigationActive : false,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };

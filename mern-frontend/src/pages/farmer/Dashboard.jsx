@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLiveIoT } from '../../hooks/useLiveIoT';
+
 import {
   Droplets, Thermometer, Cloud, CloudRain, Lightbulb, Bell, ArrowRight,
 } from 'lucide-react';
@@ -23,6 +25,7 @@ export default function FarmerDashboard() {
   const [data, setData] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { data, loading, error } = useLiveIoT('farm-node-001');
 
   useEffect(() => {
     Promise.all([
