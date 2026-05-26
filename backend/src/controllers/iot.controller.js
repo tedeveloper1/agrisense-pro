@@ -4,7 +4,7 @@ const Device = require('../models/Device');
 exports.ingest = async (req, res, next) => {
   try {
     const { deviceId } = req.body;
-    if (!deviceId) return res.status(400).json({ error: 'ValidationError', message: 'deviceId is required' });
+    if (!deviceId) return res.status(400).json({ error: 'deviceId is required' });
 
     const device = await Device.findOneAndUpdate(
       { deviceId },
@@ -13,30 +13,14 @@ exports.ingest = async (req, res, next) => {
     );
 
     const reading = await IoTData.create({
-      ...req.body,
+      ...req.body,          // picks up pH, irrigationActive, pesticideActive
       farm: device.farm,
       timestamp: req.body.timestamp ? new Date(req.body.timestamp) : new Date(),
     });
     res.status(201).json({ reading });
   } catch (err) { next(err); }
 };
-exports.ingestData = async (req, res) => {
-  try {
-    const {
-      deviceId, soilMoisture, temperature,
-      humidity, pH, irrigationActive, pesticideActive
-    } = req.body;
 
-    const entry = await IoTData.create({
-      deviceId, soilMoisture, temperature,
-      humidity, pH, irrigationActive, pesticideActive
-    });
-
-    res.status(201).json({ success: true, data: entry });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
 
 exports.latest = async (req, res, next) => {
   try {

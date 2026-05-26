@@ -24,19 +24,20 @@ export default function FarmerDashboard() {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { data, loading, error } = useLiveIoT('farm-node-001');
+  const { data: iotLive, loading: iotLoading, error: iotError } = useLiveIoT('farm-node-001');
 
-  useEffect(() => {
-    Promise.all([
-      api.get('/farmer/dashboard').then((r) => setData(r.data)).catch(() => setData({})),
-      api.get('/history/user').then((r) => setHistory((r.data.iot || []).slice().reverse())).catch(() => {}),
-    ]).finally(() => setLoading(false));
-  }, []);
+ useEffect(() => {
+  Promise.all([
+    api.get('/farmer/dashboard').then((r) => setDashData(r.data)).catch(() => setDashData({})),
+    api.get('/history/user').then((r) => setHistory((r.data.iot || []).slice().reverse())).catch(() => {}),
+  ]).finally(() => setDashLoading(false));
+}, []);
 
-  if (loading) return <PageSkeleton rows={2} />;
+if (dashLoading || iotLoading) return <PageSkeleton rows={2} />;
 
-  const iot = data?.latestIot || {};
+// Then use iotLive for live sensor cards:
+const iot = iotLive || dashData?.latestIot || {};
+
   const chart = history.map((h) => ({
     t: new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     moisture: h.soilMoisture,

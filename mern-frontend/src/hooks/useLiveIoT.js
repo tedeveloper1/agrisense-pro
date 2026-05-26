@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../services/api'; // your existing axios instance
+import api from '../services/api';
 
 export function useLiveIoT(deviceId = 'farm-node-001', intervalMs = 15000) {
   const [data, setData] = useState(null);
