@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveIoT } from '../../hooks/useLiveIoT';
+import IoTStatus from './IoTStatus';
 
 import {
   Droplets, Thermometer, Cloud, CloudRain, Lightbulb, Bell, ArrowRight,
@@ -54,32 +55,10 @@ const iot = iotLive || dashData?.latestIot || {};
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard
-          icon={Droplets}
-          label={t('dashboard.soilMoisture')}
-          value={iot.soilMoisture != null ? `${iot.soilMoisture}%` : '—'}
-          hint="Optimal 50–70%"
-          accent="brand"
-        />
-        <StatCard
-          icon={Thermometer}
-          label={t('dashboard.temperature')}
-          value={iot.temperature != null ? `${iot.temperature}°C` : '—'}
-          accent="amber"
-        />
-        <StatCard
-          icon={Cloud}
-          label={t('dashboard.humidity')}
-          value={iot.humidity != null ? `${iot.humidity}%` : '—'}
-          accent="indigo"
-        />
-        <StatCard
-          icon={CloudRain}
-          label={t('dashboard.rainfall')}
-          value={iot.rainfall != null ? `${iot.rainfall} mm` : '—'}
-          hint="Last 24h"
-          accent="rose"
-        />
+        
+        
+        <IoTStatus/>
+        
       </div>
 
       <div className="surface p-5">
