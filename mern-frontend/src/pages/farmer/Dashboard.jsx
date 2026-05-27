@@ -31,7 +31,7 @@ const [dashLoading, setDashLoading] = useState(true);
  useEffect(() => {
   Promise.all([
     api.get('/farmer/dashboard').then((r) => setDashData(r.data)).catch(() => setDashData({})),
-    api.get('/history/user').then((r) => setHistory((r.data.iot || []).slice().reverse())).catch(() => {}),
+    api.get('/iot/latest').then((r) => setHistory((r.data.iot || []).slice().reverse())).catch(() => {}),
   ]).finally(() => setDashLoading(false));
 }, []);
 
